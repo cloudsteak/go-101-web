@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-101-web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-101-web
+  template:
+    metadata:
+      labels:
+        app: go-101-web
+    spec:
+      containers:
+      - name: go-101-web
+        image: the1bit/go-101-web
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
