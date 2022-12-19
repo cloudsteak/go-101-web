@@ -3,21 +3,40 @@ kind: Deployment
 metadata:
   name: go-101-web-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: go-101-web
+      tier: frontend
+      track: stable
   template:
     metadata:
       labels:
         app: go-101-web
+        tier: frontend
+        track: stable
     spec:
       containers:
-      - name: go-101-web
-        image: the1bit/go-101-web
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 3000
+        - name: go-101-web
+          image: the1bit/go-101-web
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-101-web-lb
+spec:
+  selector:
+    app: go-101-web
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer

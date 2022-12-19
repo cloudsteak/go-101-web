@@ -9,7 +9,7 @@ WORKDIR /
 COPY . .
 
 # Download all the dependencies
-RUN go get .
+RUN go get -u .
 
 # Install the package
 RUN go install -v .
