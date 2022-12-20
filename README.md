@@ -19,7 +19,15 @@ docker build --tag cloudsteak/go-101-web --platform linux/amd64 .
 ## Run docker image locally
 
 ```bash
-docker run -d -p 80:3000 --name goweb01 cloudsteak/go-101-web:latest
+docker run -e MW_HOST_NAME="gomiddleware01" -e MW_HOST_PORT="4000" -d -p 82:3000 --name goweb01 cloudsteak/go-101-web:latest
+```
+
+### Connect web and middleware to same network
+
+```bash
+docker network create go101
+docker network connect go101 goweb01
+docker network connect go101 gomiddleware01
 ```
 
 ### Force delete docker container

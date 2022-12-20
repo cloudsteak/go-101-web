@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: go-101-web-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: go-101-web
@@ -19,6 +19,11 @@ spec:
       containers:
         - name: go-101-web
           image: the1bit/go-101-web
+          env:
+          - name: MW_HOST_NAME
+            value: "go-101-middleware-cip"
+          - name: MW_HOST_PORT
+            value: "80"
           resources:
             limits:
               memory: "128Mi"
